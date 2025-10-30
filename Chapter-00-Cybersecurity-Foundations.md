@@ -528,6 +528,603 @@ ASCII Diagram - Internet Architecture:
 - **Cost**: Minimal (attack prevented)
 - **Details**: Remote access compromise attempted to increase sodium hydroxide levels
 
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.4 Data and Packets: Understanding Network Communication</span>
+
+### What is Data?
+
+**Data** is any information that can be processed, stored, or transmitted by a computer system. In cybersecurity, understanding how data moves through networks is fundamental to protecting it.
+
+**Types of Data:**
+- **Structured Data**: Organized in databases (names, addresses, numbers)
+- **Unstructured Data**: Text documents, emails, images, videos
+- **Semi-structured Data**: JSON, XML files with some organization
+- **Metadata**: Data about data (file size, creation date, author)
+
+**Real-world example**: Like letters in the mail - data is the actual message content, while metadata is the envelope with sender/recipient information.
+
+### What are Packets?
+
+**Packets** are small units of data that are transmitted over networks. Think of them as digital envelopes that contain pieces of information.
+
+**Packet Structure:**
+```
+ASCII Diagram - Packet Structure:
+┌─────────────────────────────────────────────────────────────┐
+│ Header (Control Information)                               │
+│ ┌─────────┬─────────┬─────────┬─────────┬─────────┐        │
+│ │ Source  │Dest     │Protocol │Sequence │Checksum │        │
+│ │ IP      │IP       │Type     │Number   │         │        │
+│ └─────────┴─────────┴─────────┴─────────┴─────────┘        │
+├─────────────────────────────────────────────────────────────┤
+│ Payload (Actual Data)                                      │
+│ ┌─────────────────────────────────────────────────────────┐ │
+│ │ "Hello World" (Your actual message)                   │ │
+│ └─────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Real-world analogy**: Like sending a letter - the envelope (header) contains delivery information, and the letter inside (payload) contains your actual message.
+
+### How Data Becomes Packets
+
+**Step 1: Data Segmentation**
+- Large files are broken into smaller pieces
+- Each piece becomes a packet
+- Like cutting a large pizza into slices
+
+**Step 2: Header Addition**
+- Each packet gets addressing information
+- Source and destination IP addresses
+- Protocol information (TCP, UDP)
+- Sequence numbers for reassembly
+
+**Step 3: Transmission**
+- Packets travel independently through the network
+- They may take different routes
+- Like different cars taking different roads to the same destination
+
+### Packet Headers Explained
+
+**IP Header (Internet Protocol)**
+```
+ASCII Diagram - IP Header:
+┌─────────────────────────────────────────────────────────────┐
+│ Version │ IHL  │ Type of Service │ Total Length            │
+├─────────────────────────────────────────────────────────────┤
+│ Identification │ Flags │ Fragment Offset                   │
+├─────────────────────────────────────────────────────────────┤
+│ Time to Live │ Protocol │ Header Checksum                  │
+├─────────────────────────────────────────────────────────────┤
+│ Source IP Address (32 bits)                               │
+├─────────────────────────────────────────────────────────────┤
+│ Destination IP Address (32 bits)                           │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**TCP Header (Transmission Control Protocol)**
+```
+ASCII Diagram - TCP Header:
+┌─────────────────────────────────────────────────────────────┐
+│ Source Port │ Destination Port                             │
+├─────────────────────────────────────────────────────────────┤
+│ Sequence Number                                            │
+├─────────────────────────────────────────────────────────────┤
+│ Acknowledgment Number                                     │
+├─────────────────────────────────────────────────────────────┤
+│ Flags │ Window Size │ Checksum │ Urgent Pointer            │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Data Flow Through Network Layers
+
+**Application Layer → Transport Layer → Network Layer → Data Link Layer → Physical Layer**
+
+```
+ASCII Diagram - Data Flow:
+┌─────────────────────────────────────────────────────────────┐
+│ Application: "Hello World" message                        │
+│ ↓                                                          │
+│ Transport: TCP segments with port numbers                 │
+│ ↓                                                          │
+│ Network: IP packets with source/destination addresses      │
+│ ↓                                                          │
+│ Data Link: Ethernet frames with MAC addresses             │
+│ ↓                                                          │
+│ Physical: Electrical signals on cables                    │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Packet Switching vs Circuit Switching
+
+**Packet Switching (Internet)**
+- Data is broken into packets
+- Packets travel independently
+- More efficient use of network resources
+- Like sending letters through the postal system
+
+**Circuit Switching (Traditional Phone)**
+- Dedicated connection established
+- Continuous data flow
+- Less efficient but guaranteed bandwidth
+- Like having a dedicated phone line
+
+### Common Packet Types
+
+**TCP Packets**
+- **SYN**: Connection initiation
+- **ACK**: Acknowledgment
+- **FIN**: Connection termination
+- **Data**: Actual information
+
+**UDP Packets**
+- **Simple**: No connection establishment
+- **Fast**: No error checking
+- **Used for**: Video streaming, gaming, DNS queries
+
+**ICMP Packets**
+- **Ping**: Network connectivity testing
+- **Traceroute**: Path discovery
+- **Error Messages**: Network problem reporting
+
+### Packet Capture and Analysis
+
+**What is Packet Capture?**
+- Recording network traffic for analysis
+- Like recording phone conversations for review
+- Used for troubleshooting and security analysis
+
+**Common Tools:**
+- **Wireshark**: Graphical packet analyzer
+- **tcpdump**: Command-line packet capture
+- **Tshark**: Command-line version of Wireshark
+
+**Real-world example**: Like a security camera recording who enters and leaves a building - packet capture records what data enters and leaves your network.
+
+### Security Implications of Packets
+
+**Packet Sniffing**
+- **What it is**: Intercepting and reading packets
+- **Risk**: Sensitive data exposure
+- **Prevention**: Encryption (HTTPS, VPN)
+
+**Packet Injection**
+- **What it is**: Inserting malicious packets
+- **Risk**: Network attacks, data corruption
+- **Prevention**: Network segmentation, firewalls
+
+**Man-in-the-Middle Attacks**
+- **What it is**: Intercepting and modifying packets
+- **Risk**: Data theft, credential harvesting
+- **Prevention**: Certificate validation, secure protocols
+
+### Data Encryption in Packets
+
+**Encryption Process:**
+1. **Plaintext**: Original readable data
+2. **Encryption**: Data scrambled using algorithms
+3. **Ciphertext**: Encrypted data in packets
+4. **Decryption**: Receiver unscrambles data
+
+**Real-world example**: Like putting your message in a locked box (encryption) before sending it through the mail (packets).
+
+### Network Protocols and Data
+
+**HTTP (HyperText Transfer Protocol)**
+- **Port**: 80
+- **Data**: Web pages, images, text
+- **Security**: Unencrypted (vulnerable to sniffing)
+
+**HTTPS (HTTP Secure)**
+- **Port**: 443
+- **Data**: Encrypted web content
+- **Security**: Encrypted (protected from sniffing)
+
+**FTP (File Transfer Protocol)**
+- **Port**: 21 (control), 20 (data)
+- **Data**: Files, documents
+- **Security**: Unencrypted (use SFTP instead)
+
+**SMTP (Simple Mail Transfer Protocol)**
+- **Port**: 25
+- **Data**: Email messages
+- **Security**: Unencrypted (use SMTPS instead)
+
+### Practical Example: Sending an Email
+
+**Step 1: Data Creation**
+- You type "Hello" in your email client
+- This becomes the payload data
+
+**Step 2: Packet Formation**
+- Data is broken into packets
+- Headers added with source/destination
+- Like putting your message in envelopes
+
+**Step 3: Network Transmission**
+- Packets travel through routers
+- Each router reads the destination address
+- Like mail sorting at post offices
+
+**Step 4: Delivery and Reassembly**
+- Packets arrive at destination
+- Headers removed, data reassembled
+- Recipient sees "Hello" message
+
+**Real-world analogy**: Like sending a letter - you write the message (data), put it in an envelope (packet), address it (headers), and send it through the postal system (network).
+
+### Data Integrity and Error Detection
+
+**Checksums**
+- Mathematical values calculated from data
+- Used to detect transmission errors
+- Like a receipt number to verify delivery
+
+**Cyclic Redundancy Check (CRC)**
+- Error-detection method
+- Detects accidental changes in data
+- Like a barcode that verifies package contents
+
+**Real-world example**: Like a bank account number with a check digit - if you mistype one digit, the system knows something is wrong.
+
+### Network Monitoring and Data Analysis
+
+**What Network Monitoring Shows:**
+- **Data Volume**: How much data is transmitted
+- **Data Types**: What protocols are being used
+- **Data Sources**: Where data is coming from
+- **Data Destinations**: Where data is going
+
+**Security Benefits:**
+- **Anomaly Detection**: Unusual data patterns
+- **Threat Identification**: Malicious data flows
+- **Compliance**: Meeting regulatory requirements
+- **Performance**: Network optimization
+
+**Real-world example**: Like a traffic monitoring system that tracks all vehicles (packets) on roads (network) to identify problems and optimize flow.
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.5 Botnets and Related Terminology</span>
+
+Botnets are networks of compromised devices ("bots" or "zombies") controlled by a central operator (the "botmaster"). Attackers use botnets to perform large‑scale malicious activities such as DDoS attacks, credential stuffing, spam campaigns, and malware distribution.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">Core Concepts (Beginner‑Friendly)</span>
+- **Bot/Bot Agent**: An infected device under attacker control. It still looks normal to the owner.
+- **Botmaster**: The attacker who builds and controls the botnet.
+- **C2 (Command‑and‑Control)**: The communication system the botmaster uses to send instructions to bots.
+- **Zombie Device**: Another name for a bot; "does the attacker’s bidding" quietly.
+- **DDoS (Distributed Denial of Service)**: Using many bots to overwhelm a target so it becomes slow or unavailable.
+- **Spam/Phishing Delivery**: Bots send bulk emails to trick users or spread malware.
+- **Credential Stuffing**: Bots test stolen username/password pairs on many sites.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">How Devices Join a Botnet</span>
+- **Infection Vectors**: Phishing emails, malicious downloads, drive‑by exploits, weak passwords, exposed services.
+- **Propagation**: Some botnets spread automatically by scanning the internet for vulnerable devices.
+- **Persistence**: Malware ensures it runs after reboot (startup entries, services, cron tasks).
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">C2 (Command‑and‑Control) Architectures</span>
+- **Centralized (IRC/HTTP)**: Easy to control; easier to disrupt if C2 is taken down.
+- **Peer‑to‑Peer (P2P)**: Bots talk to each other; harder to shut down.
+- **Fast‑Flux**: Rapidly changing IPs/DNS to hide C2 and avoid blocking.
+- **DGA (Domain Generation Algorithm)**: Malware computes many domain names daily; attackers register a few to regain control even if some are blocked.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">Common Botnet Types</span>
+- **IoT Botnets**: Cameras/routers with default passwords (e.g., Mirai) recruited for DDoS.
+- **PC Botnets**: Laptops/desktops used for spam, crypto‑mining, and credential attacks.
+- **Mobile Botnets**: Infected phones used for SMS fraud, ad fraud, info‑stealing.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">Attacker Goals and Payloads</span>
+- **DDoS for Hire**: Selling attack time to others.
+- **Crypto‑Mining**: Using victims’ CPUs/GPUs to mine cryptocurrency.
+- **Info‑Stealing**: Capturing passwords, cookies, or banking data.
+- **Proxying**: Routing traffic through bots to hide attacker identity.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">Detection and Defense (Plain Language)</span>
+- **Signs of Infection**: Slow device, high CPU/network usage, unknown processes, traffic to strange domains.
+- **Endpoint Protection**: Keep OS/software updated; use reputable AV/EDR.
+- **Strong Passwords**: Change default passwords, enable multi‑factor authentication.
+- **Network Controls**: Segment networks, block outbound to known bad domains, limit unusual ports.
+- **Rate‑Limiting/CDN/WAF**: Helps absorb/deflect DDoS against public websites.
+- **Monitoring and IOCs (Indicators of Compromise)**: Watch logs for odd domains, DGAs, and fast‑flux patterns.
+- **Response**: Isolate the device, remove malware (AV tools/reimage), rotate credentials, update all systems.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">Beginner Analogy</span>
+Imagine a prank organizer texting thousands of strangers to ring your doorbell at the same time. Each stranger is a "bot"; the organizer is the "botmaster"; the group chat is the "C2". Your doorbell (website) gets overwhelmed (DDoS).
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.6 The Dark Web: Concepts, Markets, and Safety</span>
+
+The "dark web" refers to parts of the internet that are intentionally hidden and require special software (commonly the Tor Browser) to access. It hosts both legitimate content (privacy‑focused forums, journalism drop boxes) and illicit marketplaces. Understanding it helps defenders recognize threats, data leakage, and attacker ecosystems.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">Surface, Deep, and Dark Web</span>
+- **Surface Web**: Indexed by search engines (news sites, blogs). Everyday browsing.
+- **Deep Web**: Not indexed but legit (email inboxes, banking portals, paywalled content).
+- **Dark Web**: Accessible via anonymity networks (e.g., Tor), uses special domains (often `.onion`).
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">How People Access It (At a High Level)</span>
+- **Tor Browser**: Routes traffic through volunteer relays to hide IP addresses.
+- **Onion Services**: Sites hosted within Tor; domain names look random and end with `.onion`.
+- **Privacy Note**: Tor hides network paths, not your behavior. Downloading malware or revealing personal info still puts you at risk.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">What Markets Sell (Awareness for Defenders)</span>
+- **Data**: Stolen credentials, credit cards, identity packages ("fullz"), corporate data dumps.
+- **Access**: RDP (Remote Desktop Protocol)/VPN (Virtual Private Network) logins, cloud accounts; sold by Initial Access Brokers (IABs).
+- **Malware/Services**: Ransomware‑as‑a‑Service (RaaS), botnets for rent, phishing kits.
+- **Illicit Goods**: Counterfeit documents, drugs, weapons (availability varies and is heavily policed).
+- **Guides and Tools**: Fraud tutorials, carding tools, social engineering kits.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">Currencies and Payments</span>
+- **Bitcoin (BTC)**: Most recognized, but transactions are publicly traceable on the blockchain.
+- **Monero (XMR)**: Favored for privacy due to built‑in obfuscation features.
+- **Escrow**: Markets hold funds until the buyer confirms receipt; reduces scams but not foolproof.
+- **PGP (Pretty Good Privacy)**: Vendors often require PGP encryption for shipping details to protect buyer privacy.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">Market Operations</span>
+- **Vendor Reputation**: Rating systems/reviews try to distinguish trustworthy sellers.
+- **Mirrors and Takedowns**: Markets change addresses frequently due to law‑enforcement actions and scams.
+- **Exit Scams**: Operators may disappear with user funds; always a risk.
+- **Forums**: Communities discuss techniques, trade access, and share indicators—useful for threat intelligence.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">Risks and Legal Considerations</span>
+- **Illegality**: Many activities are illegal. Simply viewing leaked data may violate laws or policies.
+- **Malware/Phishing**: Links and downloads can infect systems; sandboxes and read‑only environments are critical for research.
+- **Law Enforcement**: Ongoing operations monitor and dismantle markets; interactions may be recorded.
+- **Organizational Policy**: Always obtain written permission and use dedicated research environments.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">Defender’s View: Why Learn This?</span>
+- **Leak Monitoring**: Detect stolen corporate credentials/data early.
+- **Threat Intelligence**: Identify IOCs (Indicators of Compromise) such as domains, wallets, and PGP (Pretty Good Privacy) keys, and track upcoming campaigns.
+- **Brand Protection**: Spot counterfeit apps, domains, and impersonation schemes.
+- **Security Awareness**: Teach employees about data value and social engineering risks.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">Myths vs. Reality (Beginner Clarity)</span>
+- "Everything is criminal" → The dark web includes legitimate privacy‑focused content, but risks are high.
+- "Crypto is untraceable" → Many coins are traceable; privacy coins add hurdles but not immunity.
+- "Tor guarantees safety" → It masks IPs but cannot fix unsafe behavior or compromised endpoints.
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.7 Authentication, Authorization, and Accounting (AAA)</span>
+
+AAA is a foundational security model:
+- **Authentication**: Verifies identity (who you are).
+- **Authorization**: Determines access (what you can do).
+- **Accounting**: Logs activity (what you did).
+
+Use cases:
+- Centralized login with **RADIUS (Remote Authentication Dial-In User Service)** or **TACACS+ (Terminal Access Controller Access-Control System Plus)** for network devices.
+- Per‑user access to VPNs and Wi‑Fi with activity logging for audits.
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.8 Cryptography Basics</span>
+
+Cryptography protects data confidentiality, integrity, and authenticity.
+- **Symmetric Encryption** (one key): Fast; used for bulk data (e.g., AES).
+- **Asymmetric Encryption** (key pair): Public/private keys for exchange/signing (e.g., RSA, ECC).
+- **PKI (Public Key Infrastructure)**: Certificates, Certificate Authorities (CAs), revocation.
+
+Use cases:
+- **TLS (Transport Layer Security)** for HTTPS; disk encryption; secure messaging and code signing.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">Cryptography vs. Cryptocurrency (Beginner‑Friendly)</span>
+
+Cryptography and cryptocurrency are related but different:
+
+- **Cryptography (Security Science)**: The math and methods used to keep data secret (confidentiality), detect changes (integrity), and prove identity (authenticity). It powers encryption, hashing, digital signatures, and secure authentication.
+  - **Encryption**: Turns readable data (plaintext) into unreadable data (ciphertext). Only someone with the right key can decrypt it.
+    - **Symmetric**: Same key to encrypt/decrypt (e.g., AES). Fast; used for files, disks, and secure channels after key exchange.
+    - **Asymmetric**: Public key to encrypt/verify, private key to decrypt/sign (e.g., RSA, ECC, PGP/Pretty Good Privacy).
+  - **Hashing**: One‑way fingerprint of data (e.g., SHA‑256) to check integrity. If data changes, the hash changes.
+  - **Digital Signatures**: Prove who sent something and that it wasn’t altered (authenticity + integrity).
+  - **PKI (Public Key Infrastructure)**: The system of certificates and Certificate Authorities (CAs) that lets your browser trust websites.
+  - Use cases: HTTPS/TLS, secure emails, software updates, password storage, VPNs.
+
+- **Cryptocurrency (Digital Money)**: A type of digital currency that uses cryptography to secure transactions and control issuance, typically running on decentralized blockchains.
+  - **Decentralization**: No single bank controls it; many nodes keep the ledger.
+  - **Blockchain**: A shared, append‑only ledger of transactions.
+  - **Cryptographic Security**: Public‑key cryptography ensures only the wallet owner can move funds.
+  - **Consensus**:
+    - **Proof‑of‑Work (PoW)**: Miners solve puzzles (e.g., Bitcoin/BTC).
+    - **Proof‑of‑Stake (PoS)**: Validators stake coins to propose/validate blocks (e.g., Ethereum/ETH).
+  - Popular examples: Bitcoin (BTC), Ethereum (ETH), Monero (XMR), Litecoin (LTC).
+  - Use cases: Peer‑to‑peer payments, smart contracts and decentralized apps (dApps), remittances, and (speculative) store of value.
+
+Beginner takeaway:
+- Cryptography is the toolbox (encryption, hashing, signatures).
+- Cryptocurrency is one application that uses that toolbox to make digital money work securely.
+
+Key differences at a glance:
+- **Purpose**: Cryptography secures data and identity; cryptocurrency enables digital money and programmable finance.
+- **Technology**: Cryptography includes encryption/hash/signatures/PKI; cryptocurrency builds on blockchain with cryptography inside.
+- **Control**: Cryptography is used everywhere (often by centralized systems); cryptocurrencies are typically decentralized by design.
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.9 Hashing and Password Storage</span>
+
+Hashing creates a fixed‑size fingerprint of data; not reversible.
+- Add **salt** to prevent rainbow table attacks.
+- Prefer slow, memory‑hard algorithms: **bcrypt**, **scrypt**, **Argon2**.
+
+Use cases:
+- Secure password storage; file integrity verification; deduplication.
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.10 Multi‑Factor Authentication (MFA)</span>
+
+MFA combines two or more factors: something you know (password), have (token), are (biometrics).
+- **TOTP (Time‑based One‑Time Password)** apps are better than SMS.
+- **FIDO2/WebAuthn** hardware keys resist phishing and credential replay.
+
+Use cases:
+- Protect admin accounts, remote access, email, and cloud logins.
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.11 Zero Trust Principles</span>
+
+“Never trust, always verify.”
+- Continuous verification of user, device, and context; least privilege; micro‑segmentation.
+
+Use cases:
+- Control lateral movement; conditional access policies; device posture checks.
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.12 Secure Network Architecture</span>
+
+Design networks to limit blast radius.
+- **Segmentation/VLANs (Virtual LANs)**; **DMZ (Demilitarized Zone)**; **jump hosts/bastions**.
+- North‑south vs east‑west traffic; egress controls.
+
+Use cases:
+- Isolate critical systems; expose only necessary services; reduce impact of breaches.
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.13 Threat Modeling</span>
+
+Identify assets, entry points, and attacker goals; prioritize controls.
+- Methods like **STRIDE (Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege)**.
+
+Use cases:
+- Design reviews; secure feature planning; identifying abuse cases early.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">Spoofing</span>
+Spoofing is when an attacker pretends to be someone/something else to gain access or mislead systems.
+- **Examples**:
+  - Email spoofing: Fake “from” address to look like a bank or colleague.
+  - IP spoofing: Falsified source IP to appear as a trusted host.
+- **Mitigations**:
+  - Strong authentication: digital signatures, **MFA (Multi‑Factor Authentication)**, **TLS (Transport Layer Security)**.
+  - Email authentication: **SPF (Sender Policy Framework)**, **DKIM (DomainKeys Identified Mail)**, **DMARC (Domain‑based Message Authentication, Reporting & Conformance)**.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">Tampering</span>
+Tampering is the unauthorized modification of data in storage, in transit, or in use.
+- **Examples**:
+  - Man‑in‑the‑Middle (MitM): Altering data during a transaction.
+  - Database tampering: Changing balances or inserting malicious rows.
+- **Mitigations**:
+  - End‑to‑end encryption (e.g., TLS) and secure protocols.
+  - Integrity checks: hashing, digital signatures, checksums.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">Repudiation</span>
+Repudiation is when a user denies performing an action and there is insufficient proof.
+- **Examples**:
+  - A user deletes files and denies it.
+  - A transaction is sent, then disowned by the sender.
+- **Mitigations**:
+  - Comprehensive logging and audit trails with time stamps and user IDs.
+  - Digital signatures and non‑repudiation controls.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">Information Disclosure</span>
+Unintended exposure of sensitive data.
+- **Examples**:
+  - Database exposure of credentials, card data, or health records.
+  - Leaking session IDs or internal info via improper HTTP responses.
+- **Mitigations**:
+  - Encrypt data at rest (e.g., AES) and in transit (TLS).
+  - Strict access controls; least privilege; mask/redact sensitive fields in logs.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">Denial of Service (DoS)</span>
+Making a system unavailable by overwhelming or crashing it.
+- **Examples**:
+  - **DDoS (Distributed DoS)** using botnets to flood a site.
+  - Application‑layer floods exhausting web app resources.
+- **Mitigations**:
+  - Rate‑limiting, WAF (Web Application Firewall), and smart filtering.
+  - CDNs, load balancers, and cloud DDoS protection services.
+
+#### <span style="color: #C73E1D; font-size: 1.2em; font-weight: bold;">Elevation of Privilege</span>
+Gaining higher access than authorized by exploiting flaws.
+- **Examples**:
+  - OS privilege escalation to admin/root.
+  - Web app escalation to admin through logic or access‑control bugs.
+- **Mitigations**:
+  - Least privilege and **RBAC (Role‑Based Access Control)**.
+  - Timely patching; regular security reviews and access audits.
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.14 MITRE ATT&CK Basics</span>
+
+ATT&CK is a knowledge base of adversary tactics and techniques.
+- Map detections and alerts to tactics to find visibility gaps.
+
+Use cases:
+- Build detection coverage; red/blue team alignment; reporting maturity.
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.15 Logging, SIEM, and Detections</span>
+
+Centralize logs and create actionable alerts.
+- **SIEM (Security Information and Event Management)** collects, correlates, and alerts.
+
+Use cases:
+- Detect suspicious authentications, privilege misuse, data exfiltration, persistence techniques.
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.16 Vulnerability and Patch Management</span>
+
+Continuously find and fix weaknesses.
+- Prioritize with **CVSS (Common Vulnerability Scoring System)** and **KEV (Known Exploited Vulnerabilities)**.
+
+Use cases:
+- Regular scans, remediation SLAs (Service Level Agreements), verification scans, exception tracking.
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.17 Secure Configuration and Baselines</span>
+
+Harden systems and keep them consistent.
+- **CIS (Center for Internet Security) Benchmarks**; config drift detection; golden images.
+
+Use cases:
+- Baseline servers and endpoints; enforce secure defaults; periodic audits.
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.18 Endpoint Security</span>
+
+Protect user devices and servers.
+- **EPP (Endpoint Protection Platform)** vs **EDR (Endpoint Detection and Response)** vs **XDR (Extended Detection and Response)**.
+
+Use cases:
+- Block malware, investigate processes, isolate hosts, control applications/USBs.
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.19 Email Security</span>
+
+Email is the top attack vector.
+- **SPF (Sender Policy Framework)**, **DKIM (DomainKeys Identified Mail)**, **DMARC (Domain‑based Message Authentication, Reporting and Conformance)**.
+
+Use cases:
+- Reduce spoofing; detect phishing; quarantine suspicious messages; security awareness training.
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.20 Cloud Security Foundations</span>
+
+Understand the **shared responsibility model**.
+- Strong **IAM (Identity and Access Management)**; least privilege; secure storage; network controls.
+
+Use cases:
+- Prevent public buckets; manage keys/secrets; monitor control plane and audit logs.
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.21 Data Security</span>
+
+Protect data throughout its lifecycle.
+- Classification; **DLP (Data Loss Prevention)**; encryption at rest/in transit; key management.
+
+Use cases:
+- Prevent sensitive data leaks; tokenization; secrets management in CI/CD.
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.22 Backup, RPO/RTO, and Resilience</span>
+
+Plan to recover from failures and attacks.
+- **RPO (Recovery Point Objective)**, **RTO (Recovery Time Objective)**; immutable, offline backups.
+
+Use cases:
+- Ransomware recovery; periodic restore tests; prioritized recovery runbooks.
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.23 Identity and Access</span>
+
+Modern identity standards and lifecycle.
+- **SSO (Single Sign‑On)**; **OAuth 2.0** and **OpenID Connect (OIDC)**; **SCIM (System for Cross‑domain Identity Management)**.
+
+Use cases:
+- Centralized access; short‑lived tokens; secure session management; automated provisioning.
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.24 API Security Basics</span>
+
+Secure machine‑to‑machine interfaces.
+- AuthN/AuthZ; rate limiting; input validation; logging; OWASP API Top 10 awareness.
+
+Use cases:
+- Protect public/private APIs; prevent injection and broken object level authorization (BOLA).
+
+### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.2.25 Privacy and Compliance Basics</span>
+
+Handle personal data responsibly.
+- **PII (Personally Identifiable Information)**, **PHI (Protected Health Information)**; **GDPR (General Data Protection Regulation)**, **CCPA (California Consumer Privacy Act)**.
+
+Use cases:
+- Data minimization; retention policies; subject access requests; privacy by design.
+
 ## <span style="color: #A23B72; font-size: 1.8em; font-weight: bold;">0.3 Networking 101</span>
 
 ### <span style="color: #F18F01; font-size: 1.4em; font-weight: bold;">0.3.1 Network Fundamentals</span>
@@ -1514,260 +2111,6 @@ ASCII Diagram - Network Troubleshooting Tools:
 - **Trigger Events**: Risk reviews based on changes
 - **Stakeholder Input**: Involving relevant parties
 - **Documentation**: Recording review results
-
-## 0.6.5 Data and Packets: Understanding Network Communication
-
-### What is Data?
-
-**Data** is any information that can be processed, stored, or transmitted by a computer system. In cybersecurity, understanding how data moves through networks is fundamental to protecting it.
-
-**Types of Data:**
-- **Structured Data**: Organized in databases (names, addresses, numbers)
-- **Unstructured Data**: Text documents, emails, images, videos
-- **Semi-structured Data**: JSON, XML files with some organization
-- **Metadata**: Data about data (file size, creation date, author)
-
-**Real-world example**: Like letters in the mail - data is the actual message content, while metadata is the envelope with sender/recipient information.
-
-### What are Packets?
-
-**Packets** are small units of data that are transmitted over networks. Think of them as digital envelopes that contain pieces of information.
-
-**Packet Structure:**
-```
-ASCII Diagram - Packet Structure:
-┌─────────────────────────────────────────────────────────────┐
-│ Header (Control Information)                               │
-│ ┌─────────┬─────────┬─────────┬─────────┬─────────┐        │
-│ │ Source  │Dest     │Protocol │Sequence │Checksum │        │
-│ │ IP      │IP       │Type     │Number   │         │        │
-│ └─────────┴─────────┴─────────┴─────────┴─────────┘        │
-├─────────────────────────────────────────────────────────────┤
-│ Payload (Actual Data)                                      │
-│ ┌─────────────────────────────────────────────────────────┐ │
-│ │ "Hello World" (Your actual message)                   │ │
-│ └─────────────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────────┘
-```
-
-**Real-world analogy**: Like sending a letter - the envelope (header) contains delivery information, and the letter inside (payload) contains your actual message.
-
-### How Data Becomes Packets
-
-**Step 1: Data Segmentation**
-- Large files are broken into smaller pieces
-- Each piece becomes a packet
-- Like cutting a large pizza into slices
-
-**Step 2: Header Addition**
-- Each packet gets addressing information
-- Source and destination IP addresses
-- Protocol information (TCP, UDP)
-- Sequence numbers for reassembly
-
-**Step 3: Transmission**
-- Packets travel independently through the network
-- They may take different routes
-- Like different cars taking different roads to the same destination
-
-### Packet Headers Explained
-
-**IP Header (Internet Protocol)**
-```
-ASCII Diagram - IP Header:
-┌─────────────────────────────────────────────────────────────┐
-│ Version │ IHL  │ Type of Service │ Total Length            │
-├─────────────────────────────────────────────────────────────┤
-│ Identification │ Flags │ Fragment Offset                   │
-├─────────────────────────────────────────────────────────────┤
-│ Time to Live │ Protocol │ Header Checksum                  │
-├─────────────────────────────────────────────────────────────┤
-│ Source IP Address (32 bits)                               │
-├─────────────────────────────────────────────────────────────┤
-│ Destination IP Address (32 bits)                           │
-└─────────────────────────────────────────────────────────────┘
-```
-
-**TCP Header (Transmission Control Protocol)**
-```
-ASCII Diagram - TCP Header:
-┌─────────────────────────────────────────────────────────────┐
-│ Source Port │ Destination Port                             │
-├─────────────────────────────────────────────────────────────┤
-│ Sequence Number                                            │
-├─────────────────────────────────────────────────────────────┤
-│ Acknowledgment Number                                     │
-├─────────────────────────────────────────────────────────────┤
-│ Flags │ Window Size │ Checksum │ Urgent Pointer            │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Data Flow Through Network Layers
-
-**Application Layer → Transport Layer → Network Layer → Data Link Layer → Physical Layer**
-
-```
-ASCII Diagram - Data Flow:
-┌─────────────────────────────────────────────────────────────┐
-│ Application: "Hello World" message                        │
-│ ↓                                                          │
-│ Transport: TCP segments with port numbers                 │
-│ ↓                                                          │
-│ Network: IP packets with source/destination addresses      │
-│ ↓                                                          │
-│ Data Link: Ethernet frames with MAC addresses             │
-│ ↓                                                          │
-│ Physical: Electrical signals on cables                    │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Packet Switching vs Circuit Switching
-
-**Packet Switching (Internet)**
-- Data is broken into packets
-- Packets travel independently
-- More efficient use of network resources
-- Like sending letters through the postal system
-
-**Circuit Switching (Traditional Phone)**
-- Dedicated connection established
-- Continuous data flow
-- Less efficient but guaranteed bandwidth
-- Like having a dedicated phone line
-
-### Common Packet Types
-
-**TCP Packets**
-- **SYN**: Connection initiation
-- **ACK**: Acknowledgment
-- **FIN**: Connection termination
-- **Data**: Actual information
-
-**UDP Packets**
-- **Simple**: No connection establishment
-- **Fast**: No error checking
-- **Used for**: Video streaming, gaming, DNS queries
-
-**ICMP Packets**
-- **Ping**: Network connectivity testing
-- **Traceroute**: Path discovery
-- **Error Messages**: Network problem reporting
-
-### Packet Capture and Analysis
-
-**What is Packet Capture?**
-- Recording network traffic for analysis
-- Like recording phone conversations for review
-- Used for troubleshooting and security analysis
-
-**Common Tools:**
-- **Wireshark**: Graphical packet analyzer
-- **tcpdump**: Command-line packet capture
-- **Tshark**: Command-line version of Wireshark
-
-**Real-world example**: Like a security camera recording who enters and leaves a building - packet capture records what data enters and leaves your network.
-
-### Security Implications of Packets
-
-**Packet Sniffing**
-- **What it is**: Intercepting and reading packets
-- **Risk**: Sensitive data exposure
-- **Prevention**: Encryption (HTTPS, VPN)
-
-**Packet Injection**
-- **What it is**: Inserting malicious packets
-- **Risk**: Network attacks, data corruption
-- **Prevention**: Network segmentation, firewalls
-
-**Man-in-the-Middle Attacks**
-- **What it is**: Intercepting and modifying packets
-- **Risk**: Data theft, credential harvesting
-- **Prevention**: Certificate validation, secure protocols
-
-### Data Encryption in Packets
-
-**Encryption Process:**
-1. **Plaintext**: Original readable data
-2. **Encryption**: Data scrambled using algorithms
-3. **Ciphertext**: Encrypted data in packets
-4. **Decryption**: Receiver unscrambles data
-
-**Real-world example**: Like putting your message in a locked box (encryption) before sending it through the mail (packets).
-
-### Network Protocols and Data
-
-**HTTP (HyperText Transfer Protocol)**
-- **Port**: 80
-- **Data**: Web pages, images, text
-- **Security**: Unencrypted (vulnerable to sniffing)
-
-**HTTPS (HTTP Secure)**
-- **Port**: 443
-- **Data**: Encrypted web content
-- **Security**: Encrypted (protected from sniffing)
-
-**FTP (File Transfer Protocol)**
-- **Port**: 21 (control), 20 (data)
-- **Data**: Files, documents
-- **Security**: Unencrypted (use SFTP instead)
-
-**SMTP (Simple Mail Transfer Protocol)**
-- **Port**: 25
-- **Data**: Email messages
-- **Security**: Unencrypted (use SMTPS instead)
-
-### Practical Example: Sending an Email
-
-**Step 1: Data Creation**
-- You type "Hello" in your email client
-- This becomes the payload data
-
-**Step 2: Packet Formation**
-- Data is broken into packets
-- Headers added with source/destination
-- Like putting your message in envelopes
-
-**Step 3: Network Transmission**
-- Packets travel through routers
-- Each router reads the destination address
-- Like mail sorting at post offices
-
-**Step 4: Delivery and Reassembly**
-- Packets arrive at destination
-- Headers removed, data reassembled
-- Recipient sees "Hello" message
-
-**Real-world analogy**: Like sending a letter - you write the message (data), put it in an envelope (packet), address it (headers), and send it through the postal system (network).
-
-### Data Integrity and Error Detection
-
-**Checksums**
-- Mathematical values calculated from data
-- Used to detect transmission errors
-- Like a receipt number to verify delivery
-
-**Cyclic Redundancy Check (CRC)**
-- Error-detection method
-- Detects accidental changes in data
-- Like a barcode that verifies package contents
-
-**Real-world example**: Like a bank account number with a check digit - if you mistype one digit, the system knows something is wrong.
-
-### Network Monitoring and Data Analysis
-
-**What Network Monitoring Shows:**
-- **Data Volume**: How much data is transmitted
-- **Data Types**: What protocols are being used
-- **Data Sources**: Where data is coming from
-- **Data Destinations**: Where data is going
-
-**Security Benefits:**
-- **Anomaly Detection**: Unusual data patterns
-- **Threat Identification**: Malicious data flows
-- **Compliance**: Meeting regulatory requirements
-- **Performance**: Network optimization
-
-**Real-world example**: Like a traffic monitoring system that tracks all vehicles (packets) on roads (network) to identify problems and optimize flow.
 
 ## 0.7 Cybersecurity Governance
 
